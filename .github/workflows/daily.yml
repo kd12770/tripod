@@ -67,6 +67,12 @@ jobs:
             echo "gear=$(python3 -c "import json;print(json.load(open('docs/state.json'))['gear'])")"
           } >> "$GITHUB_OUTPUT"
 
+      - name: 텔레그램 알림 전송
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python3 src/send_telegram.py
+
       - name: 요약 출력
         run: |
           python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
